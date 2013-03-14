@@ -1,9 +1,11 @@
 var PagesController = require('../controllers/pagescontroller')
 ,		AuthController = require('../controllers/authcontroller')
-,		passport = require('passport');
+,		passport = require('passport')
+,		RoomController = require('../controllers/roomcontroller');
 
 
 var verifyUser = function (req, res, next) {
+	if (req.url.match('^/(stylesheets|js|images)')) return next();
 
 	if (req.session.passport.user) return next();
 	res.redirect('/login');
@@ -12,10 +14,6 @@ var verifyUser = function (req, res, next) {
 	
 
 var route = function (app) {
-
-	app.get('/*, verifyUser');//applys middleware to all routes
-
-	app.get('/', PagesController.home);
 
 	app.get('/login', AuthController.login);
 
@@ -30,6 +28,15 @@ var route = function (app) {
 	app.get('/auth/google/return', 
 	  passport.authenticate('google', { successRedirect: '/',
 	                                    failureRedirect: '/login' }));
+
+	app.all('*', verifyUser);
+	app.get('/', PagesController.home);
+
+	app.get('/rooms', RoomController.index);
+	app.get('/rooms/:id', RoomController.show);
+	app.post('/rooms', RoomController.create);
+	app.put('/rooms/:id', RoomController.update);
+	app.delete('/rooms/:id', RoomController.delete);
 
 };
 

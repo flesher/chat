@@ -1,7 +1,7 @@
 var PagesController = {
 
 	home:function (req, res) {
-		res.render('pages/home');
+		res.render('pages/home', {user:req.user});
 	
 	}
 
