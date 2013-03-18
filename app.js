@@ -58,6 +58,7 @@ passport.use(new GoogleStrategy({
 ));
 
 route(app);
+//test
 
 //allows socket.io to work within express
 var server = http.createServer(app);
