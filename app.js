@@ -59,6 +59,25 @@ passport.use(new GoogleStrategy({
 
 route(app);
 
-http.createServer(app).listen(app.get('port'), function(){
+//allows socket.io to work within express
+var server = http.createServer(app);
+io = require('socket.io').listen(server);
+
+server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
+});
+
+io.sockets.on('connection', function (socket) {
+
+  socket.emit('message', {message: "Connected to Chat...", from: "system"});
+
+  socket.on('join', function (data){
+    socket.join(data.room);
+    socket.broadcast.to(data.room).emit('message', {message:data.from+"joined the room.", from:"system"});
+    socket.emit('message', {message: "you have joined the room"+data.room, from:"system"});
+  });
+
+  socket.on('message', function (data) {
+    socket.broadcast.to(data.room).emit('message', data);
+  });
 });

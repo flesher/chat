@@ -5,3 +5,15 @@ body {
 a {
   color: #00b7ff;
 }
+#incoming {
+  width: 400px;
+  height: 300px;
+  overflow: scroll;
+  border: solid 1px #333;
+}
+#outgoing {
+  width: 400px;
+  height: 50px;
+  overflow: scroll;
+  border: solid 1px #ccc;
+}

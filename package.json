@@ -11,6 +11,7 @@
     "stylus": "*",
     "mongoose": "*",
     "passport": "*",
-    "passport-google": "*"
+    "passport-google": "*",
+    "socket.io": "*"
   }
 }
