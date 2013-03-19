@@ -8,9 +8,18 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , passport = require('passport')
-  , mongoose = require('mongoose');
+  , mongoose = require('mongoose')
+  , MongoStore = require('connect-mongo')(express);
 
 var app = express();
+
+// var conf = {
+//   db: {
+//     db: 'chat_DEV',
+//     host: '127.0.0.1'
+//   },
+//   secret: '076ee61d63aa10a125ea872411e433b9'
+// };
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -20,20 +29,31 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(express.cookieParser('your secret here'));
-  app.use(express.session());
+  app.use(express.cookieParser());
+
+//mongodb connection
+  mongoose.connect('mongodb://localhost/chat_DEV');
+
+  app.use(express.session({
+    secret: "This is a secret",
+    maxAge: new Date(Date.now() + 3600000),
+    store: new MongoStore({
+      mongoose_connection: mongoose.connection
+      ,db: 'chat_DEV'
+    })
+  }));
+  // important that this comes after session management
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(app.router);
   app.use(require('stylus').middleware(__dirname + '/public'));
   app.use(express.static(path.join(__dirname, 'public')));
-
   app.locals.title = "William Chat-ner";
 });
 
 app.configure('development', function(){
   app.use(express.errorHandler());
-  mongoose.connect('mongodb://localhost/chat_DEV');
+  // mongoose.connect('mongodb://localhost/chat_DEV');
 });
 
 passport.serializeUser(function(user, done) {
@@ -56,6 +76,17 @@ passport.use(new GoogleStrategy({
     UserModel.findOneAndUpdate({email:profile.email}, {$set:profile, $inc:{logins:1}}, {upsert:true}, done);
   }
 ));
+
+// var dbUrl = 'mongodb://';
+//   dbUrl += conf.db.username+':'+conf.db.password+'@';
+//   dbUrl += conf.db.host+':'+conf.db.port;
+//   dbUrl += '/' + conf.db.db;
+//   mongo.connect(dbUrl);
+//   mongo.connection.on('open', function () {
+//     app.listen(3000);
+// });
+
+
 
 route(app);
 

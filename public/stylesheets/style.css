@@ -17,3 +17,20 @@ a {
   overflow: scroll;
   border: solid 1px #ccc;
 }
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.left {
+  text-align: left;
+  margin-left: 10px;
+}
+.right {
+  text-align: right;
+  margin-right: 10px;
+}
+.system {
+  font-family: courier;
+  background: #b4e0ec;
+}

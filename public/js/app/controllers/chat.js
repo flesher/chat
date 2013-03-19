@@ -10,7 +10,7 @@
 			if (!event.shiftkey && event.which==13) {
 				var message = textarea.val();
 				this.socket.emit('message', {room:this.room._id, message:message, from:this.options.user.displayName});
-				this.element.find('#incoming').append('<p>'+message+'</p>');
+				this.element.find('#incoming').append('<pre><p class="right">'+message+'</p></pre>');
 				textarea.val(''); 
 			}
 		},
@@ -26,6 +26,12 @@
 		},
 
 		"route": function () {
+			
+			if (this.socket != undefined){
+				this.socket.disconnect();
+			}
+
+
 			var self = this;
 			RoomModel.findAll({}, function (rooms) {
 				self.element.html(Templates["pages/partial.rooms.jade"]({rooms:rooms}));
@@ -38,13 +44,27 @@
 					self.room = room;
 					self.element.html(Templates["pages/partial.room.jade"]({}));
 
-					self.socket = io.connect(window.location.origin);
+					if ( !self.socket ){
+						
+						self.socket = io.connect(window.location.origin);	
+
+						self.socket.on('message', function (data) {
+							if (data.from == "system"){
+								self.element.find('#incoming').append('<pre><p class="left system">'+data.message+'</p></pre>');
+							} else {
+								self.element.find('#incoming').append('<pre><p class="left">'+data.message+'</p></pre>');
+							}
+						});
+
+					} else {
+
+						self.socket.socket.connect();
+
+					}
 
 					self.socket.emit('join', {room:room._id, from:self.options.user.displayName});
 
-					self.socket.on('message', function (data) {
-						self.element.find('#incoming').append('<p>'+data.message+'</p>');
-					});
+
 			});
 		}
 
