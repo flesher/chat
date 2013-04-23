@@ -4,32 +4,49 @@ body
 a
   color: #00B7FF
 
+header ul
+  list-style none
+  
+header li
+  float left
+  margin-right 10px
 
-#incoming 
-	width 400px
-	height 300px
-	overflow scroll
-	border solid 1px #333
+header a
+  text-decoration none
+  
+header a:hover
+  border-bottom 1px dotted #00B7FF
 
-#outgoing 
-	width 400px
-	height 50px
-	overflow scroll
-	border solid 1px #ccc
+#main
+  margin-top 50px
 
-.group:after 
-  content: "";
-  display: table;
-  clear: both;
+#incoming
+  width 400px
+  height 300px
+  overflow scroll
+  border solid 1px #333
+  background-color #c6c6c4
+  margin-left 300px
 
-.left
-	text-align left
-	margin-left 10px
+#outgoing
+  width 396px
+  height 50px
+  margin-top 20px
+  overflow scroll
+  border solid 1px #ccc
+  margin-left 300px
 
-.right
-	text-align right
-	margin-right 10px
+.outgoing
+  text-align right
+  color #6a91a0
+  margin 0 0 2px 0
+  background #ebebeb
+  padding-right: 5px
+
+.fromuser
+  color black
+  font 18px Arial
+  margin 5px
 
 .system
-	font-family courier
-	background #b4e0ec
+  color red

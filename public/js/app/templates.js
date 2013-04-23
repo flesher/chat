@@ -4,12 +4,29 @@ var jade=function(exports){Array.isArray||(Array.isArray=function(arr){return"[o
 
  var templates = {};
 
+templates["pages/partial.message.jade"] = function anonymous(locals, attrs, escape, rethrow, merge) {
+attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
+var buf = [];
+with (locals || {}) {
+var interp;
+ var cls = source;
+ if (from=='system') cls = "system";
+buf.push('<p');
+buf.push(attrs({ "class": ("" + (cls) + "") }, {"class":true}));
+buf.push('><span>');
+var __val__ = from
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span>' + escape((interp = message) == null ? '' : interp) + '</p>');
+}
+return buf.join("");
+}
+
 templates["pages/partial.room.jade"] = function anonymous(locals, attrs, escape, rethrow, merge) {
 attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<div id="incoming"> </div><textarea id="outgoing"></textarea>');
+buf.push('<div id="incoming"></div><textarea id="outgoing"></textarea>');
 }
 return buf.join("");
 }
@@ -19,7 +36,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<form><input name="title" placeholder="Room title..." type="text"/><input type="submit" value="Create Room"/></form><ul>');
+buf.push('<form><input name="title" placeholder="room title" type="text"/><input type="submit" value="Create Room"/></form><ul>');
 // iterate rooms
 ;(function(){
   if ('number' == typeof rooms.length) {
@@ -29,7 +46,7 @@ buf.push('<form><input name="title" placeholder="Room title..." type="text"/><in
 
 buf.push('<li><a');
 buf.push(attrs({ 'href':("#!" + (room._id) + "") }, {"href":true}));
-buf.push('>	' + escape((interp = room.title) == null ? '' : interp) + '</a></li>');
+buf.push('>' + escape((interp = room.title) == null ? '' : interp) + '</a></li>');
     }
 
   } else {
@@ -39,7 +56,7 @@ buf.push('>	' + escape((interp = room.title) == null ? '' : interp) + '</a></li>
 
 buf.push('<li><a');
 buf.push(attrs({ 'href':("#!" + (room._id) + "") }, {"href":true}));
-buf.push('>	' + escape((interp = room.title) == null ? '' : interp) + '</a></li>');
+buf.push('>' + escape((interp = room.title) == null ? '' : interp) + '</a></li>');
     }
 
   }

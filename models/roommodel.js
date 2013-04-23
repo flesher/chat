@@ -1,12 +1,8 @@
-var mongoose = require('mongoose')
+var mongoose = require('mongoose'),
+RoomSchema = mongoose.Schema({
+  title: String
+}),
 
-
-,		RoomSchema = mongoose.Schema({
-			title: String
-		})
-
-,	 	RoomModel = mongoose.model('room', RoomSchema);
-
-
+RoomModel = mongoose.model('room', RoomSchema);
 
 module.exports = RoomModel;

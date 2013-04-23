@@ -1,8 +1,8 @@
 form
-	input(name="title", placeholder="Room title...", type="text")
-	input(type="submit", value="Create Room")
+  input(name="title", placeholder = "room title", type="text")
+  input(type="submit", value="Create Room")
 
 ul
-	each room in rooms
-		li
-			a(href="#!#{room._id}")	#{room.title}
+  each room in rooms
+    li
+      a(href="#!#{room._id}") #{room.title}

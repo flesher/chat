@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "Chat",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,7 +12,7 @@
     "mongoose": "*",
     "passport": "*",
     "passport-google": "*",
-    "socket.io": "*",
-    "connect-mongo": "*"
+    "socket.io":"*",
+    "connect-mongo":"*"
   }
 }
