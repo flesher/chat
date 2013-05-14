@@ -8,8 +8,20 @@ UserSchema = mongoose.Schema({
   },
   logins: {type: Number, default: 0},
   avatar:String
-}),
+});
 
-UserModel = mongoose.model('user', UserSchema);
+UserSchema.statics.findByEmail = function (email, callback) {
+
+	UserModel.findOne({email:email}, callback);
+
+};
+
+UserSchema.methods.fullname = function () {
+
+	return this.name.givenName + ' ' + this.name.familyName;
+
+};
+
+var UserModel = mongoose.model('user', UserSchema);
 
 module.exports = UserModel;

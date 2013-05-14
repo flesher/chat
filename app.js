@@ -57,6 +57,10 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+app.configure('production', function(){
+  app.use(express.errorHandler());
+});
+
 passport.serializeUser(function(user, done) { //passport stuff should be in separate file
   done(null, user);
 });
